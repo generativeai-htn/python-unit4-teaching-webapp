@@ -375,6 +375,8 @@ section:not(.hero) {
 .assessment-panel,
 .assessment-item,
 .report-card,
+.data-panel,
+.submission-card,
 .slide-viewer,
 .slide-list,
 .example-list,
@@ -995,6 +997,32 @@ a:focus-visible {
   color: #7c2d12;
 }
 
+.checkpoint-label {
+  margin-top: 0.85rem;
+  color: #7c2d12;
+}
+
+.checkpoint-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.65rem;
+  margin-top: 0.45rem;
+}
+
+.checkpoint-feedback {
+  min-height: 28px;
+  margin: 0.55rem 0 0;
+  color: #7c2d12;
+  font-weight: 800;
+}
+
+.button:disabled,
+.answer-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  transform: none;
+}
+
 .workshop-actions,
 .assessment-actions {
   display: flex;
@@ -1117,6 +1145,43 @@ a:focus-visible {
   font-weight: 800;
 }
 
+.data-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, auto);
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem;
+}
+
+.submission-card {
+  padding: 1rem;
+  box-shadow: none;
+}
+
+.submission-card.submitted {
+  border-color: rgba(22, 163, 74, 0.36);
+  background: #ecfdf5;
+}
+
+.data-actions {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.status-list {
+  display: grid;
+  gap: 0.35rem;
+  margin-top: 0.8rem;
+}
+
+.status-list span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--muted);
+  font-weight: 800;
+}
+
 @media (max-width: 1040px) {
   .topbar {
     align-items: flex-start;
@@ -1138,6 +1203,7 @@ a:focus-visible {
   .slide-browser,
   .profile-layout,
   .workshop-shell,
+  .data-panel,
   .library-layout,
   .lab-layout,
   .worksheet-layout,
@@ -1181,6 +1247,7 @@ a:focus-visible {
   }
 
   .detail-head,
+  .checkpoint-row,
   .editor-tools {
     grid-template-columns: 1fr;
     flex-direction: column;

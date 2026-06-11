@@ -562,6 +562,22 @@ const workshopItems = [
   { title: "สรุปคลังเครื่องมือ", goal: "ทบทวน =, int, float, str, type(), str(), int(), float(), print()", task: "ทำโจทย์ฝึกและแบบวัดผลเพื่อรับรายงานทักษะ" },
 ];
 
+const workshopChecks = [
+  { question: "คำสำคัญของบทนี้คืออะไร เช่น ตัวแปรหรือข้อมูล", answers: ["ตัวแปร", "ข้อมูล", "variable", "data"] },
+  { question: "ตัวแปรเปรียบเหมือนอะไร", answers: ["กล่อง", "กล่องข้อมูล"] },
+  { question: "student_1 ใช้เครื่องหมายอะไร", answers: ["_", "underscore", "ขีดล่าง"] },
+  { question: "เครื่องหมายใดใช้กำหนดค่าให้ตัวแปร", answers: ["=", "เท่ากับ"] },
+  { question: "15 เป็นชนิดข้อมูลอะไร", answers: ["int"] },
+  { question: "ชนิดข้อมูล key-value คืออะไร", answers: ["dict", "dictionary"] },
+  { question: "ฟังก์ชันใดใช้ตรวจชนิดข้อมูล", answers: ["type", "type()"] },
+  { question: "'Ha' * 3 ได้ผลลัพธ์ว่าอะไร", answers: ["HaHaHa"] },
+  { question: "ฟังก์ชันใดแปลงเป็นข้อความ", answers: ["str", "str()"] },
+  { question: "5000 - 4500 เหลือเท่าไร", answers: ["500"] },
+  { question: "balance = cash - phone_price อยู่ขั้นใดของ IPO", answers: ["process", "ประมวลผล"] },
+  { question: "คำสั่งใดใช้แสดงผลลัพธ์", answers: ["print", "print()"] },
+  { question: "เครื่องมือใดใช้ตรวจชนิดข้อมูล", answers: ["type", "type()"] },
+];
+
 const practiceItems = [
   { prompt: "เติมชนิดข้อมูล: type(15) ได้ class ของอะไร", answer: ["int"], hint: "จำนวนเต็ม" },
   { prompt: "เติมชนิดข้อมูล: type(14.3) ได้ class ของอะไร", answer: ["float"], hint: "เลขทศนิยม" },
@@ -588,8 +604,22 @@ const assessmentItems = [
 
 let currentWorkshop = 0;
 const completedWorkshops = new Set(JSON.parse(localStorage.getItem("unit4CompletedWorkshops") || "[]"));
+const passedWorkshopChecks = new Set(JSON.parse(localStorage.getItem("unit4PassedWorkshopChecks") || "[]"));
 const solvedPractice = new Set(JSON.parse(localStorage.getItem("unit4SolvedPractice") || "[]"));
 let learner = JSON.parse(localStorage.getItem("unit4Learner") || "null");
+let submittedRecord = JSON.parse(localStorage.getItem("unit4Submission") || "null");
+
+function getSavedAssessment() {
+  return JSON.parse(localStorage.getItem("unit4LastAssessment") || "null");
+}
+
+function isAssessmentUnlocked() {
+  return Boolean(learner) && completedWorkshops.size >= workshopItems.length && solvedPractice.size >= 6;
+}
+
+function isSubmissionReady() {
+  return Boolean(learner) && isAssessmentUnlocked() && Boolean(getSavedAssessment());
+}
 
 function refreshPlatformIcons() {
   if (window.lucide) window.lucide.createIcons();
@@ -618,8 +648,29 @@ function renderLearner() {
     <p>ชั้น/ห้อง ${learner.className} เลขที่ ${learner.no}</p>
     <p>พื้นฐานก่อนเรียน: <strong>${learner.level}</strong></p>
   `;
-  if (lock) lock.hidden = true;
-  if (panel) panel.hidden = false;
+  updateAssessmentGate();
+}
+
+function updateAssessmentGate() {
+  const lock = document.querySelector("#assessmentLock");
+  const panel = document.querySelector("#assessmentPanel");
+  if (!lock || !panel) return;
+  const unlocked = isAssessmentUnlocked();
+  lock.hidden = unlocked;
+  panel.hidden = !unlocked;
+  if (!unlocked) {
+    const missing = [];
+    if (!learner) missing.push("กรอกข้อมูลนักเรียน");
+    if (completedWorkshops.size < workshopItems.length) missing.push(`ทำ Workshop ให้ครบ ${workshopItems.length} ขั้น`);
+    if (solvedPractice.size < 6) missing.push("ทำโจทย์ฝึกอย่างน้อย 6 ข้อ");
+    lock.innerHTML = `
+      <i data-lucide="lock"></i>
+      <strong>ยังไม่ปลดล็อกแบบวัดผล</strong>
+      <span>${missing.join(" • ")}</span>
+      <a class="button small" href="#profile">ไปเริ่ม</a>
+    `;
+  }
+  refreshPlatformIcons();
 }
 
 function bindProfileForm() {
@@ -670,6 +721,8 @@ function renderWorkshop() {
   });
 
   const item = workshopItems[currentWorkshop];
+  const check = workshopChecks[currentWorkshop];
+  const checkPassed = passedWorkshopChecks.has(currentWorkshop);
   const page = String(currentWorkshop + 1).padStart(2, "0");
   document.querySelector("#workshopImage").src = `assets/slides/page-${page}.png`;
   document.querySelector("#workshopImage").alt = `Workshop slide ${currentWorkshop + 1}`;
@@ -677,7 +730,17 @@ function renderWorkshop() {
   document.querySelector("#workshopTitle").textContent = item.title;
   document.querySelector("#workshopGoal").textContent = item.goal;
   document.querySelector("#workshopTask").textContent = item.task;
+  const checkpointInput = document.querySelector("#workshopCheckpoint");
+  const checkpointFeedback = document.querySelector("#workshopFeedback");
+  const completeButton = document.querySelector("#completeWorkshop");
+  if (checkpointInput && checkpointFeedback && completeButton) {
+    checkpointInput.value = "";
+    checkpointInput.placeholder = check.question;
+    checkpointFeedback.textContent = checkPassed ? "Checkpoint ผ่านแล้ว สามารถบันทึกขั้นนี้ได้" : `Checkpoint: ${check.question}`;
+    completeButton.disabled = !checkPassed;
+  }
   updateProgress();
+  updateAssessmentGate();
   refreshPlatformIcons();
 }
 
@@ -695,10 +758,33 @@ function bindWorkshopControls() {
     renderWorkshop();
   });
   complete.addEventListener("click", () => {
+    if (!passedWorkshopChecks.has(currentWorkshop)) {
+      document.querySelector("#workshopFeedback").textContent = "ต้องตอบ checkpoint ให้ถูกก่อน จึงจะบันทึกขั้นนี้ได้";
+      return;
+    }
     completedWorkshops.add(currentWorkshop);
     localStorage.setItem("unit4CompletedWorkshops", JSON.stringify([...completedWorkshops]));
     renderWorkshop();
   });
+  const checkButton = document.querySelector("#checkWorkshop");
+  const checkpointInput = document.querySelector("#workshopCheckpoint");
+  if (checkButton && checkpointInput) {
+    checkButton.addEventListener("click", () => {
+      const check = workshopChecks[currentWorkshop];
+      const answer = normalizeAnswer(checkpointInput.value);
+      const accepted = check.answers.map(normalizeAnswer);
+      const ok = accepted.includes(answer);
+      const feedback = document.querySelector("#workshopFeedback");
+      if (ok) {
+        passedWorkshopChecks.add(currentWorkshop);
+        localStorage.setItem("unit4PassedWorkshopChecks", JSON.stringify([...passedWorkshopChecks]));
+        feedback.textContent = "ถูกต้อง ปลดล็อกปุ่มทำขั้นนี้แล้ว";
+      } else {
+        feedback.textContent = "ยังไม่ถูก ลองอ่านสไลด์และภารกิจอีกครั้ง";
+      }
+      renderWorkshop();
+    });
+  }
 }
 
 function normalizeAnswer(value) {
@@ -744,6 +830,8 @@ function renderPractice() {
         feedback.textContent = `ยังไม่ถูก ลองคิดจากคำใบ้: ${practiceItems[index].hint}`;
       }
       updateProgress();
+      updateAssessmentGate();
+      renderSubmissionStatus();
     });
   });
 }
@@ -832,9 +920,11 @@ function bindAssessmentControls() {
       return;
     }
     const scoreData = getAssessmentScore();
+    scoreData.checkedAt = new Date().toLocaleString("th-TH");
     localStorage.setItem("unit4LastAssessment", JSON.stringify(scoreData));
     renderReport(scoreData);
     updateProgress(scoreData.score);
+    renderSubmissionStatus();
     document.querySelector("#report").scrollIntoView({ behavior: "smooth" });
   });
   reset.addEventListener("click", () => {
@@ -842,15 +932,22 @@ function bindAssessmentControls() {
       input.checked = false;
     });
     localStorage.removeItem("unit4LastAssessment");
+    submittedRecord = null;
+    localStorage.removeItem("unit4Submission");
     renderReport();
     updateProgress(0);
+    renderSubmissionStatus();
   });
 }
 
 function updateProgress(assessmentScore = null) {
   const savedAssessment = JSON.parse(localStorage.getItem("unit4LastAssessment") || "null");
   const score = assessmentScore ?? savedAssessment?.score ?? 0;
-  const level = score ? getSkillReport(score).level : "ยังไม่ประเมิน";
+  let level = "Level 1: โปรไฟล์";
+  if (learner) level = "Level 2: Workshop";
+  if (completedWorkshops.size >= workshopItems.length) level = "Level 3: Practice";
+  if (isAssessmentUnlocked()) level = "Level 4: Assessment";
+  if (score) level = getSkillReport(score).level;
   const setText = (id, text) => {
     const node = document.querySelector(id);
     if (node) node.textContent = text;
@@ -859,6 +956,148 @@ function updateProgress(assessmentScore = null) {
   setText("#practiceProgress", `${solvedPractice.size}/${practiceItems.length}`);
   setText("#assessmentProgress", `${score}/${assessmentItems.length}`);
   setText("#skillLevelText", level);
+  renderSubmissionStatus();
+}
+
+function buildStudentRecord() {
+  const assessment = getSavedAssessment();
+  const score = assessment?.score ?? 0;
+  const report = score ? getSkillReport(score) : { level: "ยังไม่ประเมิน", text: "ยังไม่มีผลประเมิน" };
+  return {
+    student_name: learner?.name || "",
+    class_room: learner?.className || "",
+    student_no: learner?.no || "",
+    prior_level: learner?.level || "",
+    workshop_completed: `${completedWorkshops.size}/${workshopItems.length}`,
+    practice_completed: `${solvedPractice.size}/${practiceItems.length}`,
+    assessment_score: `${score}/${assessmentItems.length}`,
+    skill_level: report.level,
+    assessment_checked_at: assessment?.checkedAt || "",
+    submitted_status: submittedRecord ? "ส่งแล้ว" : "ยังไม่ส่ง",
+    submitted_at: submittedRecord?.submittedAt || "",
+    recommendation: report.text,
+  };
+}
+
+function renderSubmissionStatus() {
+  const card = document.querySelector("#submissionCard");
+  const submit = document.querySelector("#submitWork");
+  const exportButton = document.querySelector("#exportExcel");
+  if (!card || !submit || !exportButton) return;
+
+  const ready = isSubmissionReady();
+  submit.disabled = !ready || Boolean(submittedRecord);
+  exportButton.disabled = !learner;
+
+  const record = buildStudentRecord();
+  card.classList.toggle("submitted", Boolean(submittedRecord));
+  card.innerHTML = `
+    <p class="pill">Submission</p>
+    <h3>${submittedRecord ? "ส่งงานแล้ว" : ready ? "พร้อมส่งงาน" : "ยังไม่พร้อมส่งงาน"}</h3>
+    <p class="muted">${submittedRecord ? `ส่งเมื่อ ${submittedRecord.submittedAt}` : "ทำตามเงื่อนไขให้ครบเพื่อปลดล็อกการส่งงาน"}</p>
+    <div class="status-list">
+      <span>${learner ? "✓" : "•"} ข้อมูลนักเรียน: ${learner ? record.student_name : "ยังไม่กรอก"}</span>
+      <span>${completedWorkshops.size >= workshopItems.length ? "✓" : "•"} Workshop: ${record.workshop_completed}</span>
+      <span>${solvedPractice.size >= 6 ? "✓" : "•"} โจทย์ฝึก: ${record.practice_completed} (ต้องผ่านอย่างน้อย 6 ข้อ)</span>
+      <span>${getSavedAssessment() ? "✓" : "•"} แบบวัดผล: ${record.assessment_score}</span>
+      <span>${submittedRecord ? "✓" : "•"} สถานะ: ${record.submitted_status}</span>
+    </div>
+  `;
+}
+
+function submitWork() {
+  if (!isSubmissionReady()) return;
+  submittedRecord = {
+    ...buildStudentRecord(),
+    submittedAt: new Date().toLocaleString("th-TH"),
+  };
+  localStorage.setItem("unit4Submission", JSON.stringify(submittedRecord));
+  renderSubmissionStatus();
+  renderReport(getSavedAssessment());
+  refreshPlatformIcons();
+}
+
+function buildWorkbookRows() {
+  const record = buildStudentRecord();
+  const assessment = getSavedAssessment();
+  const assessmentRows = assessmentItems.map((item, index) => {
+    const selected = document.querySelector(`input[name="assessment-${index}"]:checked`);
+    const selectedIndex = selected ? Number(selected.value) : null;
+    return {
+      no: index + 1,
+      question: item.question,
+      selected_answer: selectedIndex === null ? "" : item.choices[selectedIndex],
+      correct_answer: item.choices[item.answer],
+      result: selectedIndex === item.answer ? "ถูก" : "ผิด/ยังไม่ตอบ",
+      skill: item.skill,
+    };
+  });
+  const practiceRows = practiceItems.map((item, index) => ({
+    no: index + 1,
+    prompt: item.prompt,
+    status: solvedPractice.has(index) ? "ผ่าน" : "ยังไม่ผ่าน",
+    accepted_answer: item.answer.join(" / "),
+  }));
+  const workshopRows = workshopItems.map((item, index) => ({
+    slide: index + 1,
+    title: item.title,
+    checkpoint_status: passedWorkshopChecks.has(index) ? "ผ่าน checkpoint" : "ยังไม่ผ่าน",
+    completed_status: completedWorkshops.has(index) ? "ทำแล้ว" : "ยังไม่ทำ",
+  }));
+  return { record, assessmentRows, practiceRows, workshopRows, assessment };
+}
+
+function exportExcel() {
+  const { record, assessmentRows, practiceRows, workshopRows } = buildWorkbookRows();
+  const safeName = (record.student_name || "student").replace(/[\\/:*?"<>| ]+/g, "_");
+  if (window.XLSX) {
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, XLSX.utils.json_to_sheet([record]), "student_record");
+    XLSX.utils.book_append_sheet(workbook, XLSX.utils.json_to_sheet(workshopRows), "workshop");
+    XLSX.utils.book_append_sheet(workbook, XLSX.utils.json_to_sheet(practiceRows), "practice");
+    XLSX.utils.book_append_sheet(workbook, XLSX.utils.json_to_sheet(assessmentRows), "assessment");
+    XLSX.writeFile(workbook, `python_unit4_${safeName || "student"}_record.xlsx`);
+    return;
+  }
+
+  const table = (title, rows) => {
+    const headers = Object.keys(rows[0] || {});
+    const esc = (value) => String(value ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    return `
+      <h2>${esc(title)}</h2>
+      <table border="1">
+        <thead><tr>${headers.map((head) => `<th>${esc(head)}</th>`).join("")}</tr></thead>
+        <tbody>${rows.map((row) => `<tr>${headers.map((head) => `<td>${esc(row[head])}</td>`).join("")}</tr>`).join("")}</tbody>
+      </table>
+    `;
+  };
+  const html = `
+    <html>
+      <head><meta charset="utf-8" /></head>
+      <body>
+        ${table("student_record", [record])}
+        ${table("workshop", workshopRows)}
+        ${table("practice", practiceRows)}
+        ${table("assessment", assessmentRows)}
+      </body>
+    </html>
+  `;
+  const blob = new Blob([html], { type: "application/vnd.ms-excel;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `python_unit4_${safeName || "student"}_record.xls`;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+}
+
+function bindDataControls() {
+  const submit = document.querySelector("#submitWork");
+  const exportButton = document.querySelector("#exportExcel");
+  if (submit) submit.addEventListener("click", submitWork);
+  if (exportButton) exportButton.addEventListener("click", exportExcel);
 }
 
 bindProfileForm();
@@ -868,8 +1107,10 @@ bindWorkshopControls();
 renderPractice();
 renderAssessment();
 bindAssessmentControls();
+bindDataControls();
 updateProgress();
 
 const savedAssessment = JSON.parse(localStorage.getItem("unit4LastAssessment") || "null");
 if (savedAssessment) renderReport(savedAssessment);
+renderSubmissionStatus();
 refreshPlatformIcons();

@@ -140,18 +140,24 @@
             <div class="workshop-media">
               <img id="workshopImage" src="assets/slides/page-01.png" alt="ภาพสไลด์ใน Workshop" />
             </div>
-            <div class="workshop-content">
-              <p class="pill" id="workshopSlide">Slide 1</p>
-              <h3 id="workshopTitle">เริ่มต้นบทเรียน</h3>
-              <p id="workshopGoal"></p>
-              <div class="challenge-box">
-                <strong>ภารกิจฝึกคิด</strong>
-                <p id="workshopTask"></p>
-              </div>
-              <div class="workshop-actions">
-                <button class="button secondary-light" type="button" id="prevWorkshop"><i data-lucide="arrow-left"></i> ก่อนหน้า</button>
-                <button class="button primary" type="button" id="completeWorkshop"><i data-lucide="check"></i> ทำขั้นนี้แล้ว</button>
-                <button class="button secondary-light" type="button" id="nextWorkshop">ถัดไป <i data-lucide="arrow-right"></i></button>
+        <div class="workshop-content">
+          <p class="pill" id="workshopSlide">Slide 1</p>
+          <h3 id="workshopTitle">เริ่มต้นบทเรียน</h3>
+          <p id="workshopGoal"></p>
+          <div class="challenge-box">
+            <strong>ภารกิจฝึกคิด</strong>
+            <p id="workshopTask"></p>
+            <label class="checkpoint-label" for="workshopCheckpoint">ตอบ checkpoint เพื่อปลดล็อกขั้นนี้</label>
+            <div class="checkpoint-row">
+              <input id="workshopCheckpoint" type="text" placeholder="พิมพ์คำตอบสั้น ๆ" />
+              <button class="button small" type="button" id="checkWorkshop">ตรวจ</button>
+            </div>
+            <p class="checkpoint-feedback" id="workshopFeedback" aria-live="polite"></p>
+          </div>
+          <div class="workshop-actions">
+            <button class="button secondary-light" type="button" id="prevWorkshop"><i data-lucide="arrow-left"></i> ก่อนหน้า</button>
+            <button class="button primary" type="button" id="completeWorkshop"><i data-lucide="check"></i> ทำขั้นนี้แล้ว</button>
+            <button class="button secondary-light" type="button" id="nextWorkshop">ถัดไป <i data-lucide="arrow-right"></i></button>
               </div>
             </div>
           </article>
@@ -337,6 +343,26 @@
           <p class="muted">ทำแบบวัดผลเพื่อดูรายงานสรุปคะแนน ระดับทักษะ และคำแนะนำสำหรับฝึกต่อ</p>
         </div>
       </section>
+
+      <section class="data-section" id="data" aria-labelledby="data-title">
+        <div class="section-head">
+          <p class="eyebrow">Excel Records</p>
+          <h2 id="data-title">ส่งงานและบันทึกผลลง Excel</h2>
+          <p>เมื่อทำแบบวัดผลแล้ว นักเรียนกดส่งงานเพื่อบันทึกสถานะ จากนั้น export เป็นไฟล์ Excel ส่งครูได้</p>
+        </div>
+        <div class="data-panel">
+          <div class="submission-card" id="submissionCard">
+            <p class="pill">Submission</p>
+            <h3>ยังไม่ส่งงาน</h3>
+            <p class="muted">ระบบจะปลดล็อกปุ่มส่งงานเมื่อกรอกข้อมูล ทำ Workshop ผ่านเงื่อนไข ฝึกโจทย์ และทำแบบวัดผลแล้ว</p>
+          </div>
+          <div class="data-actions">
+            <button class="button primary" type="button" id="submitWork"><i data-lucide="upload"></i> ส่งงานและบันทึกสถานะ</button>
+            <button class="button secondary-light" type="button" id="exportExcel"><i data-lucide="file-spreadsheet"></i> Export Excel</button>
+            <a class="button secondary-light" href="student_records_template.xlsx" download><i data-lucide="download"></i> ดาวน์โหลดไฟล์ Excel Template</a>
+          </div>
+        </div>
+      </section>
     </main>
 
     <footer class="footer">
@@ -345,6 +371,7 @@
     </footer>
 
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="assets/vendor/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
     <script src="app.js"></script>
   </body>
