@@ -1,21 +1,31 @@
-# Python Unit 4 Teaching WebApp
+# Python Unit 4 Learning Platform
 
-สื่อการสอนวิชาการเขียนโปรแกรม Python หน่วยที่ 4 เรื่อง **ตัวแปรและชนิดของข้อมูล (Variables & Data Types)** สำหรับใช้ประกอบการสอนในห้องเรียน
+แพลตฟอร์มฝึกเรียนด้วยตนเองสำหรับวิชาการเขียนโปรแกรม Python หน่วยที่ 4 เรื่อง **ตัวแปรและชนิดของข้อมูล (Variables & Data Types)** อ้างอิงจากสไลด์บทเรียนครบ 13 หน้า
 
-## สิ่งที่มีในเว็บ
+## ฟีเจอร์หลัก
 
-- เดโมรันโค้ดจำลอง 3 เรื่อง: การคูณข้อความ, `type()`, และใบงาน 4.2
-- สนามทดลองให้ผู้เรียนเปลี่ยนข้อความและจำนวนครั้งของ String Multiplication
-- ภาพประกอบจากสไลด์บทที่ 4
-- เครื่องมือคำนวณโจทย์นายวัฒนาซื้อโทรศัพท์
-- มินิควิซกฎการตั้งชื่อตัวแปร ตอบ “ได้/ไม่ได้” พร้อมเฉลยทันที
-- หน้าเว็บ static อัปขึ้น GitHub Pages ได้โดยตรง
+- หน้าโปรไฟล์ให้นักเรียนกรอกชื่อ ชั้น/ห้อง เลขที่ และพื้นฐานก่อนเรียน
+- Workshop 13 ขั้น เรียนตามลำดับสไลด์จนจบบท
+- แกลเลอรีสไลด์อ้างอิงครบทุกหน้า พร้อมสรุปเนื้อหา
+- เนื้อหาเสริมพร้อมตัวอย่างแยกเป็น Learning Modules
+- คลังโค้ดตัวอย่าง 10 ชุด พร้อมคำอธิบายและผลลัพธ์ที่คาดหวัง
+- Python Lab สำหรับเขียนและรัน Python ในเบราว์เซอร์ผ่าน Pyodide
+- Practice Arena พร้อมโจทย์ฝึก 8 ข้อ ตรวจคำตอบและบันทึกความคืบหน้า
+- ใบงานที่ 4.2 แบบโต้ตอบ
+- Quick Check เรื่องกฎการตั้งชื่อตัวแปร
+- Skill Assessment 10 ข้อ พร้อมรายงานระดับทักษะและคำแนะนำฝึกต่อ
+
+## ระดับทักษะในระบบวัดผล
+
+- 9-10 คะแนน: เชี่ยวชาญ
+- 7-8 คะแนน: ทำได้ดี
+- 5-6 คะแนน: กำลังพัฒนา
+- 0-4 คะแนน: เริ่มต้น
 
 ## วิธีเปิดใช้งานในเครื่อง
 
-เปิดไฟล์ `index.html` ด้วยเบราว์เซอร์ได้ทันที หรือรัน local server:
-
 ```powershell
+cd D:\PythonPrograming\python-unit4-teaching-webapp
 python -m http.server 8000
 ```
 
@@ -25,14 +35,16 @@ python -m http.server 8000
 http://localhost:8000
 ```
 
-## วิธีอัปขึ้น GitHub Pages
+หมายเหตุ: Python Lab ต้องใช้อินเทอร์เน็ตเพื่อโหลด Pyodide จาก CDN หากออฟไลน์ นักเรียนยังดูสไลด์ ทำ Workshop โจทย์ฝึก และแบบวัดผลได้
 
-1. สร้าง repository ใหม่บน GitHub
-2. อัปโหลดไฟล์ทั้งหมดในโฟลเดอร์นี้ขึ้น repository
-3. ไปที่ Settings > Pages
-4. เลือก Deploy from a branch
-5. เลือก branch หลัก และโฟลเดอร์ root
-6. กด Save แล้วรอ GitHub สร้างลิงก์เว็บ
+## วิธีอัปเดตขึ้น GitHub
+
+1. เปิด GitHub Desktop
+2. เลือก repository `python-unit4-teaching-webapp`
+3. ตรวจไฟล์ที่เปลี่ยนในแท็บ Changes
+4. ใส่ Summary เช่น `Add student practice and assessment platform`
+5. กด Commit to main
+6. กด Push origin
 
 ## โครงสร้างไฟล์
 
@@ -42,8 +54,8 @@ python-unit4-teaching-webapp/
   styles.css
   app.js
   assets/
-    unit4-cover.png
-    data-types.png
-    type-function.png
-    worksheet-4-2.png
+    slides/
+      page-01.png
+      ...
+      page-13.png
 ```
