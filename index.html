@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="สื่อการสอน Python หน่วยที่ 4 เรื่องตัวแปรและชนิดของข้อมูล พร้อมโค้ดเดโมและมินิควิซ"
+    />
+    <title>Python Unit 4 | Variables & Data Types</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Sans+Thai:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">ข้ามไปยังเนื้อหา</a>
+
+    <header class="site-header" aria-label="แถบนำทางบทเรียน">
+      <a class="brand" href="#top" aria-label="กลับไปหน้าแรก">
+        <span class="brand-mark" aria-hidden="true"><i data-lucide="box"></i></span>
+        <span>Python Unit 4</span>
+      </a>
+      <nav class="nav-links" aria-label="เมนูหลัก">
+        <a href="#demo">เดโมโค้ด</a>
+        <a href="#worksheet">ใบงาน 4.2</a>
+        <a href="#quiz">มินิควิซ</a>
+        <a href="#teacher">คู่มือครู</a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top">
+        <div class="hero-media" aria-hidden="true">
+          <img src="assets/unit4-cover.png" alt="" />
+        </div>
+        <div class="hero-content">
+          <p class="eyebrow">สื่อประกอบการเรียนการสอน</p>
+          <h1>หน่วยที่ 4: ตัวแปรและชนิดของข้อมูล</h1>
+          <p class="hero-copy">
+            ห้องเรียนแบบโต้ตอบสำหรับสาธิต Python เรื่องการตั้งชื่อตัวแปร การกำหนดค่า
+            ชนิดข้อมูลพื้นฐาน การใช้ <code>type()</code> และการคำนวณจากโจทย์จริง
+          </p>
+          <div class="hero-actions">
+            <a class="primary-action" href="#demo">
+              <i data-lucide="play"></i>
+              เริ่มสาธิต
+            </a>
+            <a class="secondary-action" href="#quiz">
+              <i data-lucide="message-square-text"></i>
+              เปิดมินิควิซ
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="lesson-map" aria-labelledby="lesson-map-title">
+        <div class="section-heading">
+          <p class="eyebrow">Lesson Flow</p>
+          <h2 id="lesson-map-title">แผนการสอนในคาบเดียว</h2>
+        </div>
+        <div class="step-grid">
+          <article class="step-card">
+            <i data-lucide="tag"></i>
+            <h3>1. ตัวแปรคืออะไร</h3>
+            <p>เปรียบตัวแปรเป็นกล่องเก็บข้อมูลที่มีป้ายชื่อเรียกใช้งานได้ภายหลัง</p>
+          </article>
+          <article class="step-card">
+            <i data-lucide="badge-check"></i>
+            <h3>2. ตั้งชื่อให้ถูกกฎ</h3>
+            <p>ฝึกแยกชื่อที่ใช้ได้กับใช้ไม่ได้ ก่อนเริ่มเขียนโปรแกรมจริง</p>
+          </article>
+          <article class="step-card">
+            <i data-lucide="scan-search"></i>
+            <h3>3. ตรวจชนิดข้อมูล</h3>
+            <p>ใช้ <code>type()</code> เพื่อดูว่าคอมพิวเตอร์มองข้อมูลเป็นชนิดใด</p>
+          </article>
+          <article class="step-card">
+            <i data-lucide="calculator"></i>
+            <h3>4. ประยุกต์กับใบงาน</h3>
+            <p>แปลงโจทย์เงินสดและราคาสินค้าเป็นตัวแปรแล้วคำนวณผลลัพธ์</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="demo-section" id="demo" aria-labelledby="demo-title">
+        <div class="section-heading">
+          <p class="eyebrow">Live Code Theater</p>
+          <h2 id="demo-title">สคริปต์โค้ดสำหรับสาธิตบน WebApp</h2>
+          <p>เลือกฉากสาธิต แล้วกดรันเพื่อให้ผลลัพธ์ปรากฏในคอนโซลจำลอง</p>
+        </div>
+
+        <div class="demo-shell">
+          <div class="demo-tabs" role="tablist" aria-label="เลือกเดโมโค้ด">
+            <button class="tab-button active" type="button" role="tab" aria-selected="true" data-demo="multiply">
+              <i data-lucide="repeat-2"></i>
+              คูณข้อความ
+            </button>
+            <button class="tab-button" type="button" role="tab" aria-selected="false" data-demo="types">
+              <i data-lucide="scan-line"></i>
+              type()
+            </button>
+            <button class="tab-button" type="button" role="tab" aria-selected="false" data-demo="worksheet">
+              <i data-lucide="wallet-cards"></i>
+              ใบงาน 4.2
+            </button>
+          </div>
+
+          <div class="code-stage">
+            <div class="code-panel" aria-label="โค้ด Python">
+              <div class="window-bar">
+                <span></span><span></span><span></span>
+                <strong>demo.py</strong>
+              </div>
+              <pre><code id="codeBlock"></code></pre>
+              <button class="run-button" type="button" id="runDemo">
+                <i data-lucide="terminal"></i>
+                Run
+              </button>
+            </div>
+            <div class="console-panel" aria-live="polite" aria-label="ผลลัพธ์จากโค้ด">
+              <div class="window-bar">
+                <span></span><span></span><span></span>
+                <strong>Output</strong>
+              </div>
+              <pre id="consoleOutput">กด Run เพื่อดูผลลัพธ์</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="lab-section" aria-labelledby="lab-title">
+        <div class="section-heading">
+          <p class="eyebrow">Student Playground</p>
+          <h2 id="lab-title">ทดลองเองระหว่างสอน</h2>
+        </div>
+        <div class="lab-grid">
+          <article class="lab-card">
+            <div class="card-title-row">
+              <i data-lucide="text-cursor-input"></i>
+              <h3>เวทมนตร์ของการคูณข้อความ</h3>
+            </div>
+            <label for="wordInput">ข้อความ</label>
+            <input id="wordInput" type="text" value="Manoch" autocomplete="off" />
+            <label for="repeatInput">จำนวนครั้ง</label>
+            <input id="repeatInput" type="number" min="0" max="12" value="3" />
+            <div class="formula"><code id="stringFormula">'Manoch' * 3</code></div>
+            <output id="stringResult">ManochManochManoch</output>
+          </article>
+
+          <article class="lab-card visual-card">
+            <div class="card-title-row">
+              <i data-lucide="layers-3"></i>
+              <h3>ชนิดข้อมูลพื้นฐาน</h3>
+            </div>
+            <img src="assets/data-types.png" alt="สไลด์สรุปชนิดข้อมูล int float และ str" />
+            <div class="type-chips" aria-label="ชนิดข้อมูลพื้นฐาน">
+              <button type="button" data-type-card="int">int</button>
+              <button type="button" data-type-card="float">float</button>
+              <button type="button" data-type-card="str">str</button>
+            </div>
+            <p id="typeExplain">กดเลือกชนิดข้อมูลเพื่อดูคำอธิบายแบบสั้นสำหรับนักเรียน</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="worksheet-section" id="worksheet" aria-labelledby="worksheet-title">
+        <div class="section-heading">
+          <p class="eyebrow">Worksheet 4.2</p>
+          <h2 id="worksheet-title">โจทย์นายวัฒนาซื้อโทรศัพท์</h2>
+          <p>ใช้ตัวแปรเก็บเงินสด ราคาโทรศัพท์ และคำนวณเงินคงเหลือ</p>
+        </div>
+
+        <div class="worksheet-layout">
+          <div class="worksheet-visual">
+            <img src="assets/worksheet-4-2.png" alt="สไลด์โจทย์นายวัฒนามีเงินสด 5,000 บาท ซื้อโทรศัพท์ 4,500 บาท" />
+          </div>
+          <div class="worksheet-tool">
+            <div class="field-pair">
+              <label for="cashInput">เงินสดเริ่มต้น</label>
+              <input id="cashInput" type="number" value="5000" min="0" />
+            </div>
+            <div class="field-pair">
+              <label for="phoneInput">ราคาโทรศัพท์</label>
+              <input id="phoneInput" type="number" value="4500" min="0" />
+            </div>
+            <div class="balance-card">
+              <span>เงินสดคงเหลือ</span>
+              <strong id="balanceResult">500 บาท</strong>
+            </div>
+            <pre class="mini-code"><code id="worksheetCode"></code></pre>
+          </div>
+        </div>
+      </section>
+
+      <section class="quiz-section" id="quiz" aria-labelledby="quiz-title">
+        <div class="section-heading">
+          <p class="eyebrow">Chat Quiz</p>
+          <h2 id="quiz-title">เกมทายกฎการตั้งชื่อตัวแปร</h2>
+          <p>ให้นักเรียนตอบว่า “ได้” หรือ “ไม่ได้” แล้วดูเฉลยทันที</p>
+        </div>
+        <div class="quiz-score" aria-live="polite">
+          <i data-lucide="sparkles"></i>
+          <span id="scoreText">ตอบถูก 0 จาก 5 ข้อ</span>
+        </div>
+        <div class="quiz-list" id="quizList"></div>
+      </section>
+
+      <section class="teacher-section" id="teacher" aria-labelledby="teacher-title">
+        <div class="section-heading">
+          <p class="eyebrow">Teacher Notes</p>
+          <h2 id="teacher-title">ลำดับการใช้สื่อในห้องเรียน</h2>
+        </div>
+        <div class="teacher-grid">
+          <article>
+            <i data-lucide="presentation"></i>
+            <h3>เปิดบทเรียน</h3>
+            <p>เริ่มจากถามว่า “ถ้ากล่องมีป้ายชื่อ เราจะเรียกของในกล่องซ้ำ ๆ ได้ไหม” แล้วโยงเข้าความหมายของตัวแปร</p>
+          </article>
+          <article>
+            <i data-lucide="messages-square"></i>
+            <h3>ชวนคาดเดา</h3>
+            <p>ก่อนรัน <code>type()</code> ให้เด็กทายก่อนว่า 15, 14.3 และ "Good morning" เป็นข้อมูลชนิดใด</p>
+          </article>
+          <article>
+            <i data-lucide="clipboard-check"></i>
+            <h3>ปิดท้ายด้วยใบงาน</h3>
+            <p>ให้เด็กเปลี่ยนค่าตัวเลขในเครื่องมือใบงาน แล้วถามว่าตัวแปรใดคือ Input, Process และ Output</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>Python Unit 4 Teaching WebApp</span>
+      <span>พร้อม deploy ด้วย GitHub Pages</span>
+    </footer>
+
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
