@@ -607,7 +607,7 @@ const completedWorkshops = new Set(JSON.parse(localStorage.getItem("unit4Complet
 const passedWorkshopChecks = new Set(JSON.parse(localStorage.getItem("unit4PassedWorkshopChecks") || "[]"));
 const solvedPractice = new Set(JSON.parse(localStorage.getItem("unit4SolvedPractice") || "[]"));
 let learner = JSON.parse(localStorage.getItem("unit4Learner") || "null");
-let submittedRecord = JSON.parse(localStorage.getItem("unit4Submission") || "null");
+let classRecords = JSON.parse(localStorage.getItem("unit4ClassRecords") || "[]");
 
 function getSavedAssessment() {
   return JSON.parse(localStorage.getItem("unit4LastAssessment") || "null");
@@ -615,10 +615,6 @@ function getSavedAssessment() {
 
 function isAssessmentUnlocked() {
   return Boolean(learner) && completedWorkshops.size >= workshopItems.length && solvedPractice.size >= 6;
-}
-
-function isSubmissionReady() {
-  return Boolean(learner) && isAssessmentUnlocked() && Boolean(getSavedAssessment());
 }
 
 function refreshPlatformIcons() {
@@ -830,8 +826,8 @@ function renderPractice() {
         feedback.textContent = `ยังไม่ถูก ลองคิดจากคำใบ้: ${practiceItems[index].hint}`;
       }
       updateProgress();
-      updateAssessmentGate();
-      renderSubmissionStatus();
+    updateAssessmentGate();
+      renderRecordsTable();
     });
   });
 }
@@ -922,9 +918,10 @@ function bindAssessmentControls() {
     const scoreData = getAssessmentScore();
     scoreData.checkedAt = new Date().toLocaleString("th-TH");
     localStorage.setItem("unit4LastAssessment", JSON.stringify(scoreData));
+    saveCurrentStudentRecord();
     renderReport(scoreData);
     updateProgress(scoreData.score);
-    renderSubmissionStatus();
+    renderRecordsTable();
     document.querySelector("#report").scrollIntoView({ behavior: "smooth" });
   });
   reset.addEventListener("click", () => {
@@ -932,11 +929,9 @@ function bindAssessmentControls() {
       input.checked = false;
     });
     localStorage.removeItem("unit4LastAssessment");
-    submittedRecord = null;
-    localStorage.removeItem("unit4Submission");
     renderReport();
     updateProgress(0);
-    renderSubmissionStatus();
+    renderRecordsTable();
   });
 }
 
@@ -956,13 +951,14 @@ function updateProgress(assessmentScore = null) {
   setText("#practiceProgress", `${solvedPractice.size}/${practiceItems.length}`);
   setText("#assessmentProgress", `${score}/${assessmentItems.length}`);
   setText("#skillLevelText", level);
-  renderSubmissionStatus();
+  renderRecordsTable();
 }
 
 function buildStudentRecord() {
   const assessment = getSavedAssessment();
   const score = assessment?.score ?? 0;
   const report = score ? getSkillReport(score) : { level: "ยังไม่ประเมิน", text: "ยังไม่มีผลประเมิน" };
+  const stars = getStarLevel(score);
   return {
     student_name: learner?.name || "",
     class_room: learner?.className || "",
@@ -972,132 +968,75 @@ function buildStudentRecord() {
     practice_completed: `${solvedPractice.size}/${practiceItems.length}`,
     assessment_score: `${score}/${assessmentItems.length}`,
     skill_level: report.level,
+    star_level: stars,
+    stars: "★".repeat(stars) + "☆".repeat(5 - stars),
     assessment_checked_at: assessment?.checkedAt || "",
-    submitted_status: submittedRecord ? "ส่งแล้ว" : "ยังไม่ส่ง",
-    submitted_at: submittedRecord?.submittedAt || "",
+    submitted_status: assessment ? "ส่งแล้ว" : "ยังไม่ส่ง",
+    submitted_at: assessment?.checkedAt || "",
     recommendation: report.text,
   };
 }
 
-function renderSubmissionStatus() {
-  const card = document.querySelector("#submissionCard");
-  const submit = document.querySelector("#submitWork");
-  const exportButton = document.querySelector("#exportExcel");
-  if (!card || !submit || !exportButton) return;
-
-  const ready = isSubmissionReady();
-  submit.disabled = !ready || Boolean(submittedRecord);
-  exportButton.disabled = !learner;
-
+function saveCurrentStudentRecord() {
+  if (!learner || !getSavedAssessment()) return;
   const record = buildStudentRecord();
-  card.classList.toggle("submitted", Boolean(submittedRecord));
-  card.innerHTML = `
-    <p class="pill">Submission</p>
-    <h3>${submittedRecord ? "ส่งงานแล้ว" : ready ? "พร้อมส่งงาน" : "ยังไม่พร้อมส่งงาน"}</h3>
-    <p class="muted">${submittedRecord ? `ส่งเมื่อ ${submittedRecord.submittedAt}` : "ทำตามเงื่อนไขให้ครบเพื่อปลดล็อกการส่งงาน"}</p>
-    <div class="status-list">
-      <span>${learner ? "✓" : "•"} ข้อมูลนักเรียน: ${learner ? record.student_name : "ยังไม่กรอก"}</span>
-      <span>${completedWorkshops.size >= workshopItems.length ? "✓" : "•"} Workshop: ${record.workshop_completed}</span>
-      <span>${solvedPractice.size >= 6 ? "✓" : "•"} โจทย์ฝึก: ${record.practice_completed} (ต้องผ่านอย่างน้อย 6 ข้อ)</span>
-      <span>${getSavedAssessment() ? "✓" : "•"} แบบวัดผล: ${record.assessment_score}</span>
-      <span>${submittedRecord ? "✓" : "•"} สถานะ: ${record.submitted_status}</span>
-    </div>
-  `;
+  const key = `${record.student_name}-${record.class_room}-${record.student_no}`;
+  classRecords = [
+    ...classRecords.filter((item) => `${item.student_name}-${item.class_room}-${item.student_no}` !== key),
+    record,
+  ];
+  localStorage.setItem("unit4ClassRecords", JSON.stringify(classRecords));
 }
 
-function submitWork() {
-  if (!isSubmissionReady()) return;
-  submittedRecord = {
-    ...buildStudentRecord(),
-    submittedAt: new Date().toLocaleString("th-TH"),
+function getStarLevel(score) {
+  if (score >= 9) return 5;
+  if (score >= 7) return 4;
+  if (score >= 5) return 3;
+  if (score >= 3) return 2;
+  if (score >= 1) return 1;
+  return 0;
+}
+
+function normalizeRecord(row) {
+  const scoreText = String(row.assessment_score || row.score || row["คะแนน"] || "0/10");
+  const scoreNumber = Number(scoreText.split("/")[0]) || Number(scoreText) || 0;
+  const stars = Number(row.star_level || row["ระดับดาว"] || getStarLevel(scoreNumber));
+  return {
+    student_name: row.student_name || row["ชื่อ-สกุล"] || row.name || "",
+    class_room: row.class_room || row["ชั้น/ห้อง"] || "",
+    student_no: row.student_no || row["เลขที่"] || "",
+    assessment_score: scoreText,
+    star_level: stars,
+    stars: row.stars || "★".repeat(stars) + "☆".repeat(5 - stars),
+    submitted_status: row.submitted_status || row["สถานะ"] || "ส่งแล้ว",
   };
-  localStorage.setItem("unit4Submission", JSON.stringify(submittedRecord));
-  renderSubmissionStatus();
-  renderReport(getSavedAssessment());
-  refreshPlatformIcons();
 }
 
-function buildWorkbookRows() {
-  const record = buildStudentRecord();
-  const assessment = getSavedAssessment();
-  const assessmentRows = assessmentItems.map((item, index) => {
-    const selected = document.querySelector(`input[name="assessment-${index}"]:checked`);
-    const selectedIndex = selected ? Number(selected.value) : null;
-    return {
-      no: index + 1,
-      question: item.question,
-      selected_answer: selectedIndex === null ? "" : item.choices[selectedIndex],
-      correct_answer: item.choices[item.answer],
-      result: selectedIndex === item.answer ? "ถูก" : "ผิด/ยังไม่ตอบ",
-      skill: item.skill,
-    };
-  });
-  const practiceRows = practiceItems.map((item, index) => ({
-    no: index + 1,
-    prompt: item.prompt,
-    status: solvedPractice.has(index) ? "ผ่าน" : "ยังไม่ผ่าน",
-    accepted_answer: item.answer.join(" / "),
-  }));
-  const workshopRows = workshopItems.map((item, index) => ({
-    slide: index + 1,
-    title: item.title,
-    checkpoint_status: passedWorkshopChecks.has(index) ? "ผ่าน checkpoint" : "ยังไม่ผ่าน",
-    completed_status: completedWorkshops.has(index) ? "ทำแล้ว" : "ยังไม่ทำ",
-  }));
-  return { record, assessmentRows, practiceRows, workshopRows, assessment };
-}
+function renderRecordsTable(records = classRecords) {
+  const body = document.querySelector("#recordsTableBody");
+  const count = document.querySelector("#recordsCount");
+  if (!body || !count) return;
 
-function exportExcel() {
-  const { record, assessmentRows, practiceRows, workshopRows } = buildWorkbookRows();
-  const safeName = (record.student_name || "student").replace(/[\\/:*?"<>| ]+/g, "_");
-  if (window.XLSX) {
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, XLSX.utils.json_to_sheet([record]), "student_record");
-    XLSX.utils.book_append_sheet(workbook, XLSX.utils.json_to_sheet(workshopRows), "workshop");
-    XLSX.utils.book_append_sheet(workbook, XLSX.utils.json_to_sheet(practiceRows), "practice");
-    XLSX.utils.book_append_sheet(workbook, XLSX.utils.json_to_sheet(assessmentRows), "assessment");
-    XLSX.writeFile(workbook, `python_unit4_${safeName || "student"}_record.xlsx`);
+  const submitted = records.map(normalizeRecord).filter((record) => record.submitted_status === "ส่งแล้ว" || record.assessment_score !== "0/10");
+  count.textContent = `${submitted.length} คน`;
+  if (!submitted.length) {
+    body.innerHTML = `<tr><td colspan="6">ยังไม่มีข้อมูล Excel</td></tr>`;
     return;
   }
-
-  const table = (title, rows) => {
-    const headers = Object.keys(rows[0] || {});
-    const esc = (value) => String(value ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-    return `
-      <h2>${esc(title)}</h2>
-      <table border="1">
-        <thead><tr>${headers.map((head) => `<th>${esc(head)}</th>`).join("")}</tr></thead>
-        <tbody>${rows.map((row) => `<tr>${headers.map((head) => `<td>${esc(row[head])}</td>`).join("")}</tr>`).join("")}</tbody>
-      </table>
-    `;
-  };
-  const html = `
-    <html>
-      <head><meta charset="utf-8" /></head>
-      <body>
-        ${table("student_record", [record])}
-        ${table("workshop", workshopRows)}
-        ${table("practice", practiceRows)}
-        ${table("assessment", assessmentRows)}
-      </body>
-    </html>
-  `;
-  const blob = new Blob([html], { type: "application/vnd.ms-excel;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = `python_unit4_${safeName || "student"}_record.xls`;
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
-  URL.revokeObjectURL(url);
-}
-
-function bindDataControls() {
-  const submit = document.querySelector("#submitWork");
-  const exportButton = document.querySelector("#exportExcel");
-  if (submit) submit.addEventListener("click", submitWork);
-  if (exportButton) exportButton.addEventListener("click", exportExcel);
+  body.innerHTML = submitted
+    .map(
+      (record) => `
+        <tr>
+          <td>${record.student_name || "-"}</td>
+          <td>${record.class_room || "-"}</td>
+          <td>${record.student_no || "-"}</td>
+          <td>${record.assessment_score}</td>
+          <td><span class="stars">${record.stars}</span></td>
+          <td><span class="submitted-badge">ส่งแล้ว</span></td>
+        </tr>
+      `,
+    )
+    .join("");
 }
 
 bindProfileForm();
@@ -1107,10 +1046,9 @@ bindWorkshopControls();
 renderPractice();
 renderAssessment();
 bindAssessmentControls();
-bindDataControls();
 updateProgress();
 
 const savedAssessment = JSON.parse(localStorage.getItem("unit4LastAssessment") || "null");
 if (savedAssessment) renderReport(savedAssessment);
-renderSubmissionStatus();
+renderRecordsTable();
 refreshPlatformIcons();

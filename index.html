@@ -347,19 +347,35 @@
       <section class="data-section" id="data" aria-labelledby="data-title">
         <div class="section-head">
           <p class="eyebrow">Excel Records</p>
-          <h2 id="data-title">ส่งงานและบันทึกผลลง Excel</h2>
-          <p>เมื่อทำแบบวัดผลแล้ว นักเรียนกดส่งงานเพื่อบันทึกสถานะ จากนั้น export เป็นไฟล์ Excel ส่งครูได้</p>
+          <h2 id="data-title">รายชื่อนักเรียนที่ส่งผลประเมินแล้ว</h2>
+          <p>ตารางนี้แสดงรายชื่อนักเรียนที่ทำแบบวัดผลเรียบร้อยแล้ว พร้อมคะแนน ระดับดาว และสถานะ</p>
         </div>
         <div class="data-panel">
-          <div class="submission-card" id="submissionCard">
-            <p class="pill">Submission</p>
-            <h3>ยังไม่ส่งงาน</h3>
-            <p class="muted">ระบบจะปลดล็อกปุ่มส่งงานเมื่อกรอกข้อมูล ทำ Workshop ผ่านเงื่อนไข ฝึกโจทย์ และทำแบบวัดผลแล้ว</p>
-          </div>
-          <div class="data-actions">
-            <button class="button primary" type="button" id="submitWork"><i data-lucide="upload"></i> ส่งงานและบันทึกสถานะ</button>
-            <button class="button secondary-light" type="button" id="exportExcel"><i data-lucide="file-spreadsheet"></i> Export Excel</button>
-            <a class="button secondary-light" href="student_records_template.xlsx" download><i data-lucide="download"></i> ดาวน์โหลดไฟล์ Excel Template</a>
+          <div class="records-card">
+            <div class="records-head">
+              <div>
+                <p class="pill">Submitted Results</p>
+                <h3>รายชื่อคนที่ส่งแล้ว</h3>
+              </div>
+              <strong id="recordsCount">0 คน</strong>
+            </div>
+            <div class="records-table-wrap">
+              <table class="records-table">
+                <thead>
+                  <tr>
+                    <th>ชื่อ-สกุล</th>
+                    <th>ชั้น/ห้อง</th>
+                    <th>เลขที่</th>
+                    <th>คะแนน</th>
+                    <th>ระดับดาว</th>
+                    <th>สถานะ</th>
+                  </tr>
+                </thead>
+                <tbody id="recordsTableBody">
+                  <tr><td colspan="6">ยังไม่มีข้อมูล Excel</td></tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </section>
@@ -371,7 +387,6 @@
     </footer>
 
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-    <script src="assets/vendor/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
     <script src="app.js"></script>
   </body>
