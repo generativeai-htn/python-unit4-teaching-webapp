@@ -1616,6 +1616,14 @@ a:focus-visible {
     padding-bottom: calc(80px + env(safe-area-inset-bottom));
   }
 
+  .topbar {
+    justify-content: center;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
   .mobile-app-nav {
     position: fixed;
     z-index: 70;
@@ -1696,19 +1704,7 @@ a:focus-visible {
   }
 
   .nav-links {
-    width: auto;
-    max-width: 44vw;
-    margin-left: auto;
-    padding-bottom: 0;
-  }
-
-  .nav-links a {
-    min-height: 40px;
-    padding: 0.45rem 0.65rem;
-    white-space: nowrap;
-    background: #edf6ff;
-    color: #0f5f91;
-    font-size: 0.92rem;
+    display: none;
   }
 
   .hero-inner {
