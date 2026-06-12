@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="แพลตฟอร์มฝึกเขียน Python หน่วยที่ 4 เรื่องตัวแปรและชนิดข้อมูล พร้อมสไลด์ Workshop Python Lab โจทย์ฝึก และระบบวัดผล"
+      content="ปกวิชา 21910-2010 วิชาการเขียนโปรแกรมภาษาคอมพิวเตอร์ พร้อมเมนูรายหน่วยสำหรับเรียน Python แบบฝึกปฏิบัติ"
     />
-    <title>Python Unit 4 Learning Platform</title>
+    <title>21910-2010 วิชาการเขียนโปรแกรมภาษาคอมพิวเตอร์</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,380 +16,172 @@
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body>
+  <body class="course-home">
     <a class="skip-link" href="#main">ข้ามไปยังเนื้อหา</a>
 
-    <header class="topbar" aria-label="แถบนำทางหลัก">
-      <a class="brand" href="#top" aria-label="กลับไปหน้าแรก">
-        <span class="brand-mark"><i data-lucide="boxes"></i></span>
+    <header class="topbar course-topbar" aria-label="แถบนำทางหลัก">
+      <a class="brand" href="index.html" aria-label="หน้าแรกของรายวิชา">
+        <span class="brand-mark"><i data-lucide="code-2"></i></span>
         <span>
-          <strong>Python Unit 4</strong>
-          <small>Learning Platform</small>
+          <strong>21910-2010</strong>
+          <small>Computer Programming</small>
         </span>
       </a>
-      <nav class="nav-links" aria-label="เมนูบทเรียน">
-        <a href="index.html">หน่วยที่ 4</a>
+      <nav class="nav-links" aria-label="เมนูรายหน่วย">
+        <a href="#units">เมนูรายหน่วย</a>
+        <a href="unit4.html">หน่วยที่ 4</a>
         <a href="unit5.html">หน่วยที่ 5</a>
-        <a href="#profile">โปรไฟล์</a>
-        <a href="#workshop">Workshop</a>
-        <a href="#slides">สไลด์</a>
-        <a href="#code-library">ตัวอย่าง</a>
-        <a href="#python-lab">Python Lab</a>
-        <a href="#practice">ฝึกโจทย์</a>
-        <a href="#assessment">วัดผล</a>
+        <a href="#workflow">ขั้นตอนเรียน</a>
+        <a href="#features">ระบบฝึกทักษะ</a>
       </nav>
     </header>
 
     <main id="main">
-      <section class="hero" id="top">
-        <div class="hero-bg" aria-hidden="true">
+      <section class="course-cover" id="top">
+        <div class="course-cover-media" aria-hidden="true">
           <img src="assets/slides/page-01.png" alt="" />
+          <img src="assets/slides-unit5/page-01.png" alt="" />
         </div>
-        <div class="hero-inner">
-          <p class="eyebrow">Student Self-Learning Platform</p>
-          <h1>ฝึก Python เรื่องตัวแปรและชนิดข้อมูลจนจบบท</h1>
-          <p>
-            เรียนจากสไลด์ครบทุกหน้า ทำ Workshop ทีละขั้น ทดลองเขียน Python จริง
-            ฝึกโจทย์ด้วยตนเอง และรับผลประเมินระดับทักษะหลังทำแบบวัดผล
+        <div class="course-cover-inner">
+          <p class="eyebrow">Python Self-Learning Platform</p>
+          <h1>วิชาการเขียนโปรแกรมภาษาคอมพิวเตอร์</h1>
+          <p class="course-code">รหัสวิชา 21910-2010</p>
+          <p class="course-lead">
+            แพลตฟอร์มฝึกเขียน Python ที่รวมสไลด์บทเรียน Workshop เป็นขั้นตอน Python Lab โจทย์ฝึก
+            แบบวัดผล และรายงานระดับทักษะ เพื่อให้นักเรียนเรียนรู้และประเมินตนเองได้ครบในที่เดียว
           </p>
-          <div class="hero-actions">
-            <a class="button primary" href="#profile"><i data-lucide="user-round-plus"></i> เริ่มจากกรอกข้อมูล</a>
-            <a class="button secondary" href="#workshop"><i data-lucide="route"></i> ดูเส้นทาง Workshop</a>
+          <div class="course-actions">
+            <a class="button primary" href="#units"><i data-lucide="layout-grid"></i> เลือกหน่วยเรียน</a>
+            <a class="button secondary" href="unit4.html"><i data-lucide="play"></i> เริ่มเรียนหน่วยที่ 4</a>
           </div>
         </div>
-        <div class="hero-strip" aria-label="สรุปความสามารถของแพลตฟอร์ม">
-          <span><i data-lucide="presentation"></i> 13 Slides</span>
+        <div class="course-status-strip" aria-label="สรุประบบรายวิชา">
+          <span><i data-lucide="book-open-check"></i> 2 หน่วยพร้อมเรียน</span>
           <span><i data-lucide="terminal-square"></i> Python Lab</span>
-          <span><i data-lucide="list-checks"></i> Practice Tasks</span>
-          <span><i data-lucide="chart-no-axes-combined"></i> Skill Report</span>
+          <span><i data-lucide="lock-keyhole"></i> Level Unlock</span>
+          <span><i data-lucide="star"></i> Skill Rating</span>
         </div>
       </section>
 
-      <section class="profile-section" id="profile" aria-labelledby="profile-title">
+      <section class="unit-menu-section" id="units" aria-labelledby="units-title">
         <div class="section-head">
-          <p class="eyebrow">Learner Profile</p>
-          <h2 id="profile-title">กรอกข้อมูลก่อนเริ่มประเมินตนเอง</h2>
-          <p>ข้อมูลนี้ใช้แสดงในรายงานผลบนเครื่องของนักเรียนเท่านั้น ไม่ส่งไปยังเซิร์ฟเวอร์</p>
+          <p class="eyebrow">Unit Menu</p>
+          <h2 id="units-title">เมนูรายหน่วย</h2>
+          <p>เลือกหน่วยเพื่อเข้าสู่ระบบเรียน ฝึกโจทย์ และประเมินผลของหน่วยนั้นโดยตรง</p>
         </div>
-        <div class="profile-layout">
-          <form class="profile-card" id="profileForm">
-            <div class="form-grid">
-              <label>
-                ชื่อ-สกุล
-                <input id="studentName" type="text" placeholder="เช่น นายวัฒนา ใจดี" required />
-              </label>
-              <label>
-                ชั้น/ห้อง
-                <input id="studentClass" type="text" placeholder="เช่น ม.2/1" required />
-              </label>
-              <label>
-                เลขที่
-                <input id="studentNo" type="text" placeholder="เช่น 15" required />
-              </label>
-              <label>
-                ระดับพื้นฐานก่อนเรียน
-                <select id="studentLevel">
-                  <option value="เริ่มต้น">เริ่มต้น</option>
-                  <option value="เคยเขียนเล็กน้อย">เคยเขียนเล็กน้อย</option>
-                  <option value="พอเขียนได้">พอเขียนได้</option>
-                </select>
-              </label>
+        <div class="unit-menu-grid">
+          <article class="unit-card ready">
+            <div class="unit-card-image">
+              <img src="assets/slides/page-01.png" alt="สไลด์ปกหน่วยที่ 4" />
             </div>
-            <button class="button primary" type="submit"><i data-lucide="save"></i> บันทึกและเริ่มเรียน</button>
-          </form>
-          <aside class="learner-card" id="learnerCard">
-            <p class="pill">ยังไม่เริ่ม</p>
-            <h3>รอข้อมูลนักเรียน</h3>
-            <p>เมื่อบันทึกข้อมูลแล้ว ระบบจะเปิดการทำแบบวัดผลและใช้ชื่อของนักเรียนในรายงานผล</p>
-          </aside>
+            <div class="unit-card-body">
+              <p class="pill">พร้อมเรียน</p>
+              <h3>หน่วยที่ 4: ตัวแปรและชนิดของข้อมูล</h3>
+              <p>ฝึกตัวแปร ชนิดข้อมูล การใช้ `type()` การคูณข้อความ และใบงานคำนวณเงินคงเหลือ</p>
+              <div class="unit-meta">
+                <span><i data-lucide="presentation"></i> 13 สไลด์</span>
+                <span><i data-lucide="list-checks"></i> Workshop</span>
+                <span><i data-lucide="chart-no-axes-combined"></i> วัดผล</span>
+              </div>
+              <a class="button primary" href="unit4.html"><i data-lucide="arrow-right"></i> เข้าเรียนหน่วยที่ 4</a>
+            </div>
+          </article>
+
+          <article class="unit-card ready">
+            <div class="unit-card-image">
+              <img src="assets/slides-unit5/page-01.png" alt="สไลด์ปกหน่วยที่ 5" />
+            </div>
+            <div class="unit-card-body">
+              <p class="pill">พร้อมเรียน</p>
+              <h3>หน่วยที่ 5: นิพจน์และตัวดำเนินการ</h3>
+              <p>ฝึกอ่านนิพจน์ ตัวถูกดำเนินการ ตัวดำเนินการ 6 ประเภท และลำดับความสำคัญของ operator</p>
+              <div class="unit-meta">
+                <span><i data-lucide="presentation"></i> 12 สไลด์</span>
+                <span><i data-lucide="terminal-square"></i> ตัวอย่างโค้ด</span>
+                <span><i data-lucide="star"></i> ระดับดาว</span>
+              </div>
+              <a class="button primary" href="unit5.html"><i data-lucide="arrow-right"></i> เข้าเรียนหน่วยที่ 5</a>
+            </div>
+          </article>
+
+          <article class="unit-card locked">
+            <div class="unit-card-placeholder">
+              <i data-lucide="boxes"></i>
+            </div>
+            <div class="unit-card-body">
+              <p class="pill muted-pill">กำลังเตรียม</p>
+              <h3>หน่วยที่ 6</h3>
+              <p>พื้นที่สำหรับเพิ่มบทเรียนถัดไปในรูปแบบเดียวกันกับหน่วยที่ 4 และ 5</p>
+              <button class="button secondary-light" type="button" disabled><i data-lucide="lock"></i> รอเพิ่มเนื้อหา</button>
+            </div>
+          </article>
+
+          <article class="unit-card locked">
+            <div class="unit-card-placeholder">
+              <i data-lucide="route"></i>
+            </div>
+            <div class="unit-card-body">
+              <p class="pill muted-pill">กำลังเตรียม</p>
+              <h3>หน่วยที่ 7-9</h3>
+              <p>รองรับการขยายบทเรียน สไลด์ Workshop โจทย์ฝึก และแบบวัดผลในลำดับถัดไป</p>
+              <button class="button secondary-light" type="button" disabled><i data-lucide="calendar-plus"></i> เพิ่มได้ภายหลัง</button>
+            </div>
+          </article>
         </div>
       </section>
 
-      <section class="progress-section" aria-labelledby="progress-title">
+      <section class="workflow-section" id="workflow" aria-labelledby="workflow-title">
         <div class="section-head">
-          <p class="eyebrow">Learning Progress</p>
-          <h2 id="progress-title">ภาพรวมความคืบหน้า</h2>
+          <p class="eyebrow">Learning Flow</p>
+          <h2 id="workflow-title">ขั้นตอนการเรียนในแต่ละหน่วย</h2>
+          <p>ระบบถูกออกแบบให้เรียนตามลำดับ เพื่อป้องกันการกดผ่านโดยไม่อ่านหรือไม่ฝึกทำ</p>
         </div>
-        <div class="progress-grid">
+        <div class="workflow-grid">
           <article>
-            <span id="workshopProgress">0/13</span>
-            <p>Workshop Completed</p>
+            <span>1</span>
+            <h3>กรอกข้อมูลนักเรียน</h3>
+            <p>บันทึกชื่อ ชั้น/ห้อง เลขที่ ก่อนเริ่มประเมินตนเอง</p>
           </article>
           <article>
-            <span id="practiceProgress">0/8</span>
-            <p>Practice Solved</p>
+            <span>2</span>
+            <h3>ทำ Workshop ตามสไลด์</h3>
+            <p>ตอบ checkpoint เพื่อปลดล็อกแต่ละขั้นก่อนบันทึกความคืบหน้า</p>
           </article>
           <article>
-            <span id="assessmentProgress">0/10</span>
-            <p>Assessment Score</p>
+            <span>3</span>
+            <h3>ฝึกโจทย์และเขียนโค้ด</h3>
+            <p>ใช้ Python Lab ทดลองโค้ด แล้วตอบโจทย์ฝึกให้ผ่านตามเงื่อนไข</p>
           </article>
           <article>
-            <span id="skillLevelText">ยังไม่ประเมิน</span>
-            <p>Current Skill Level</p>
+            <span>4</span>
+            <h3>ทำแบบวัดผล</h3>
+            <p>ระบบสรุปคะแนน ระดับดาว สถานะการส่ง และคำแนะนำฝึกต่อ</p>
           </article>
         </div>
       </section>
 
-      <section class="workshop-section" id="workshop" aria-labelledby="workshop-title">
+      <section class="features-section" id="features" aria-labelledby="features-title">
         <div class="section-head">
-          <p class="eyebrow">Step-by-Step Workshop</p>
-          <h2 id="workshop-title">Workshop เรียนจบตามสไลด์ 13 ขั้น</h2>
-          <p>ทำทีละขั้นจากสไลด์หน้า 1 ถึงหน้า 13 แต่ละขั้นมีเป้าหมาย สิ่งที่ต้องลอง และปุ่มบันทึกความคืบหน้า</p>
+          <p class="eyebrow">Platform Features</p>
+          <h2 id="features-title">ระบบฝึกทักษะที่มีในแพลตฟอร์ม</h2>
         </div>
-        <div class="workshop-shell">
-          <aside class="workshop-steps" id="workshopSteps" aria-label="รายการ Workshop"></aside>
-          <article class="workshop-detail">
-            <div class="workshop-media">
-              <img id="workshopImage" src="assets/slides/page-01.png" alt="ภาพสไลด์ใน Workshop" />
-            </div>
-        <div class="workshop-content">
-          <p class="pill" id="workshopSlide">Slide 1</p>
-          <h3 id="workshopTitle">เริ่มต้นบทเรียน</h3>
-          <p id="workshopGoal"></p>
-          <div class="challenge-box">
-            <strong>ภารกิจฝึกคิด</strong>
-            <p id="workshopTask"></p>
-            <label class="checkpoint-label" for="workshopCheckpoint">ตอบ checkpoint เพื่อปลดล็อกขั้นนี้</label>
-            <div class="checkpoint-row">
-              <input id="workshopCheckpoint" type="text" placeholder="พิมพ์คำตอบสั้น ๆ" />
-              <button class="button small" type="button" id="checkWorkshop">ตรวจ</button>
-            </div>
-            <p class="checkpoint-feedback" id="workshopFeedback" aria-live="polite"></p>
-          </div>
-          <div class="workshop-actions">
-            <button class="button secondary-light" type="button" id="prevWorkshop"><i data-lucide="arrow-left"></i> ก่อนหน้า</button>
-            <button class="button primary" type="button" id="completeWorkshop"><i data-lucide="check"></i> ทำขั้นนี้แล้ว</button>
-            <button class="button secondary-light" type="button" id="nextWorkshop">ถัดไป <i data-lucide="arrow-right"></i></button>
-              </div>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section class="slides-section" id="slides" aria-labelledby="slides-title">
-        <div class="section-head">
-          <p class="eyebrow">Slide Reference</p>
-          <h2 id="slides-title">สไลด์และเนื้อหาอ้างอิงครบทุกหน้า</h2>
-          <p>เลือกสไลด์เพื่อดูภาพต้นฉบับ พร้อมสรุปเนื้อหาและประเด็นที่ต้องเข้าใจ</p>
-        </div>
-        <div class="slide-browser">
-          <aside class="slide-list" id="slideList" aria-label="รายการสไลด์"></aside>
-          <article class="slide-viewer">
-            <div class="slide-image-wrap">
-              <img id="activeSlideImage" src="assets/slides/page-01.png" alt="สไลด์หน้า 1" />
-            </div>
-            <div class="slide-note">
-              <p class="pill" id="activeSlideNumber">Slide 1</p>
-              <h3 id="activeSlideTitle">หน่วยที่ 4: ตัวแปรและชนิดของข้อมูล</h3>
-              <p id="activeSlideSummary"></p>
-              <ul id="activeSlideBullets"></ul>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section class="modules-section" id="modules" aria-labelledby="modules-title">
-        <div class="section-head">
-          <p class="eyebrow">Learning Modules</p>
-          <h2 id="modules-title">เนื้อหาเสริมพร้อมตัวอย่าง</h2>
-          <p>สรุปแนวคิดหลักของบทเรียนเป็นหน่วยย่อย อ่านทบทวนก่อนทำโจทย์ได้</p>
-        </div>
-        <div class="module-grid" id="moduleGrid"></div>
-      </section>
-
-      <section class="code-library" id="code-library" aria-labelledby="library-title">
-        <div class="section-head">
-          <p class="eyebrow">Example Code Library</p>
-          <h2 id="library-title">คลังโค้ดตัวอย่างตามเนื้อหา</h2>
-          <p>เลือกตัวอย่างเพื่อดูคำอธิบาย โค้ด และผลลัพธ์ แล้วส่งเข้า Python Lab เพื่อทดลองแก้ไขต่อ</p>
-        </div>
-        <div class="library-layout">
-          <aside class="example-list" id="exampleList" aria-label="รายการโค้ดตัวอย่าง"></aside>
-          <article class="example-detail">
-            <div class="detail-head">
-              <div>
-                <p class="pill" id="exampleSlideRef">อ้างอิงสไลด์</p>
-                <h3 id="exampleTitle"></h3>
-              </div>
-              <button class="button small" type="button" id="sendToLab">
-                <i data-lucide="send"></i>
-                ส่งเข้า Lab
-              </button>
-            </div>
-            <p id="exampleDescription" class="detail-copy"></p>
-            <div class="code-output-grid">
-              <div class="code-box">
-                <div class="window-bar"><span></span><span></span><span></span><strong>example.py</strong></div>
-                <pre><code id="exampleCode"></code></pre>
-              </div>
-              <div class="output-box">
-                <div class="window-bar"><span></span><span></span><span></span><strong>Expected output</strong></div>
-                <pre id="exampleOutput"></pre>
-              </div>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section class="python-lab" id="python-lab" aria-labelledby="lab-title">
-        <div class="section-head">
-          <p class="eyebrow">Python Playground</p>
-          <h2 id="lab-title">เขียนและรัน Python เพิ่มเติม</h2>
-          <p>ใช้ทดลองแก้โจทย์ ฝึกเปลี่ยนค่าตัวแปร และตรวจผลลัพธ์จริงในเบราว์เซอร์</p>
-        </div>
-        <div class="lab-status" id="pyStatus" role="status">
-          <i data-lucide="loader-circle"></i>
-          กำลังเตรียม Python runtime...
-        </div>
-        <div class="lab-layout">
-          <div class="editor-panel">
-            <div class="editor-tools">
-              <label for="sampleSelect">ตัวอย่างเริ่มต้น</label>
-              <select id="sampleSelect"></select>
-              <button class="button small ghost" type="button" id="resetLab">
-                <i data-lucide="refresh-cw"></i>
-                รีเซ็ต
-              </button>
-            </div>
-            <textarea id="pythonEditor" spellcheck="false" aria-label="พื้นที่เขียนโค้ด Python"></textarea>
-            <div class="run-row">
-              <button class="button primary" type="button" id="runPython">
-                <i data-lucide="play"></i>
-                Run Python
-              </button>
-              <button class="button secondary-light" type="button" id="clearOutput">
-                <i data-lucide="eraser"></i>
-                ล้างผลลัพธ์
-              </button>
-            </div>
-          </div>
-          <div class="terminal-panel">
-            <div class="window-bar"><span></span><span></span><span></span><strong>Python Output</strong></div>
-            <pre id="pythonOutput">รอรันโค้ด...</pre>
-          </div>
-        </div>
-      </section>
-
-      <section class="practice-section" id="practice" aria-labelledby="practice-title">
-        <div class="section-head">
-          <p class="eyebrow">Practice Arena</p>
-          <h2 id="practice-title">โจทย์ฝึกทักษะด้วยตนเอง</h2>
-          <p>ตอบโจทย์สั้น ๆ เพื่อเช็คความเข้าใจระหว่างเรียน ระบบตรวจคำตอบและอัปเดตความคืบหน้าให้ทันที</p>
-        </div>
-        <div class="practice-list" id="practiceList"></div>
-      </section>
-
-      <section class="worksheet-section" id="worksheet" aria-labelledby="worksheet-title">
-        <div class="section-head">
-          <p class="eyebrow">Applied Mission</p>
-          <h2 id="worksheet-title">ใบงานที่ 4.2: นายวัฒนาซื้อโทรศัพท์</h2>
-          <p>เปลี่ยนข้อมูลโจทย์แล้วดูว่า Input, Process และ Output ในโปรแกรมเปลี่ยนอย่างไร</p>
-        </div>
-        <div class="worksheet-layout">
-          <div class="worksheet-visual">
-            <img src="assets/slides/page-10.png" alt="สไลด์โจทย์ใบงานที่ 4.2 นายวัฒนาซื้อโทรศัพท์" />
-          </div>
-          <div class="worksheet-tool">
-            <label for="cashInput">เงินสดเริ่มต้น</label>
-            <input id="cashInput" type="number" min="0" value="5000" />
-            <label for="phoneInput">ราคาโทรศัพท์</label>
-            <input id="phoneInput" type="number" min="0" value="4500" />
-            <div class="balance-card">
-              <span>เงินสดคงเหลือ</span>
-              <strong id="balanceResult">500 บาท</strong>
-            </div>
-            <pre class="mini-code"><code id="worksheetCode"></code></pre>
-          </div>
-        </div>
-      </section>
-
-      <section class="quiz-section" id="quiz" aria-labelledby="quiz-title">
-        <div class="section-head">
-          <p class="eyebrow">Quick Check</p>
-          <h2 id="quiz-title">มินิควิซกฎการตั้งชื่อตัวแปร</h2>
-          <p>ตอบว่า “ได้” หรือ “ไม่ได้” เพื่อทบทวนกฎพื้นฐานก่อนเข้าสู่แบบวัดผล</p>
-        </div>
-        <div class="quiz-score" aria-live="polite">
-          <i data-lucide="trophy"></i>
-          <span id="scoreText">ตอบถูก 0 จาก 5 ข้อ</span>
-        </div>
-        <div class="quiz-list" id="quizList"></div>
-      </section>
-
-      <section class="assessment-section" id="assessment" aria-labelledby="assessment-title">
-        <div class="section-head">
-          <p class="eyebrow">Skill Assessment</p>
-          <h2 id="assessment-title">แบบวัดผลและประเมินสภาพทักษะ</h2>
-          <p>ต้องบันทึกข้อมูลนักเรียนก่อนเริ่มทำแบบวัดผล ระบบจะสรุประดับทักษะและคำแนะนำฝึกต่อให้</p>
-        </div>
-        <div class="assessment-lock" id="assessmentLock">
-          <i data-lucide="lock"></i>
-          <strong>กรุณากรอกข้อมูลนักเรียนก่อนเริ่มประเมิน</strong>
-          <a class="button small" href="#profile">ไปกรอกข้อมูล</a>
-        </div>
-        <div class="assessment-panel" id="assessmentPanel" hidden>
-          <div class="assessment-list" id="assessmentList"></div>
-          <div class="assessment-actions">
-            <button class="button primary" type="button" id="submitAssessment"><i data-lucide="check-circle-2"></i> ตรวจแบบวัดผล</button>
-            <button class="button secondary-light" type="button" id="resetAssessment"><i data-lucide="refresh-cw"></i> ทำใหม่</button>
-          </div>
-        </div>
-      </section>
-
-      <section class="report-section" id="report" aria-labelledby="report-title">
-        <div class="section-head">
-          <p class="eyebrow">Personal Report</p>
-          <h2 id="report-title">รายงานผลการเรียนรู้</h2>
-        </div>
-        <div class="report-card" id="reportCard">
-          <p class="muted">ทำแบบวัดผลเพื่อดูรายงานสรุปคะแนน ระดับทักษะ และคำแนะนำสำหรับฝึกต่อ</p>
-        </div>
-      </section>
-
-      <section class="data-section" id="data" aria-labelledby="data-title">
-        <div class="section-head">
-          <p class="eyebrow">Excel Records</p>
-          <h2 id="data-title">รายชื่อนักเรียนที่ส่งผลประเมินแล้ว</h2>
-          <p>ตารางนี้แสดงรายชื่อนักเรียนที่ทำแบบวัดผลเรียบร้อยแล้ว พร้อมคะแนน ระดับดาว และสถานะ</p>
-        </div>
-        <div class="data-panel">
-          <div class="records-card">
-            <div class="records-head">
-              <div>
-                <p class="pill">Submitted Results</p>
-                <h3>รายชื่อคนที่ส่งแล้ว</h3>
-              </div>
-              <strong id="recordsCount">0 คน</strong>
-            </div>
-            <div class="records-table-wrap">
-              <table class="records-table">
-                <thead>
-                  <tr>
-                    <th>ชื่อ-สกุล</th>
-                    <th>ชั้น/ห้อง</th>
-                    <th>เลขที่</th>
-                    <th>คะแนน</th>
-                    <th>ระดับดาว</th>
-                    <th>สถานะ</th>
-                  </tr>
-                </thead>
-                <tbody id="recordsTableBody">
-                  <tr><td colspan="6">ยังไม่มีข้อมูล Excel</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+        <div class="feature-board">
+          <article><i data-lucide="presentation"></i><strong>สไลด์ครบหน้า</strong><span>อ้างอิงจากไฟล์ PDF ของแต่ละหน่วย</span></article>
+          <article><i data-lucide="terminal"></i><strong>Python Lab</strong><span>เขียนและรัน Python ในเบราว์เซอร์</span></article>
+          <article><i data-lucide="shield-check"></i><strong>Checkpoint</strong><span>ปลดล็อกขั้นเรียนหลังตอบถูก</span></article>
+          <article><i data-lucide="table-2"></i><strong>รายชื่อผู้ส่ง</strong><span>แสดงนักเรียนที่ส่งผลประเมินแล้วพร้อมระดับดาว</span></article>
         </div>
       </section>
     </main>
 
     <footer class="footer">
-      <span>Python Unit 4 Learning Platform</span>
+      <span>21910-2010 วิชาการเขียนโปรแกรมภาษาคอมพิวเตอร์</span>
       <span>Static WebApp พร้อมใช้งานบน GitHub Pages</span>
     </footer>
 
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
-    <script src="app.js"></script>
+    <script>
+      if (window.lucide) window.lucide.createIcons();
+    </script>
   </body>
 </html>
