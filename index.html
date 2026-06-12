@@ -14,7 +14,7 @@
       href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Sans+Thai:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=20260612-mobile-app2" />
   </head>
   <body class="course-home">
     <a class="skip-link" href="#main">ข้ามไปยังเนื้อหา</a>
@@ -28,19 +28,25 @@
         </span>
       </a>
       <nav class="nav-links" aria-label="เมนูรายหน่วย">
-        <a href="#units">เมนูรายหน่วย</a>
+        <a href="#units">รายหน่วย</a>
         <a href="unit4.html">หน่วยที่ 4</a>
         <a href="unit5.html">หน่วยที่ 5</a>
-        <a href="#workflow">ขั้นตอนเรียน</a>
-        <a href="#features">ระบบฝึกทักษะ</a>
+        <a href="#workflow">วิธีเรียน</a>
       </nav>
     </header>
+
+    <nav class="mobile-app-nav" aria-label="เมนูแอปบนมือถือ">
+      <a href="#top"><i data-lucide="home"></i><span>หน้าแรก</span></a>
+      <a href="#units"><i data-lucide="layout-grid"></i><span>หน่วย</span></a>
+      <a href="unit4.html"><i data-lucide="play"></i><span>หน่วย 4</span></a>
+      <a href="unit5.html"><i data-lucide="sparkles"></i><span>หน่วย 5</span></a>
+      <a href="#workflow"><i data-lucide="route"></i><span>วิธีเรียน</span></a>
+    </nav>
 
     <main id="main">
       <section class="course-cover" id="top">
         <div class="course-cover-media" aria-hidden="true">
-          <img src="assets/slides/page-01.png" alt="" />
-          <img src="assets/slides-unit5/page-01.png" alt="" />
+          <img src="assets/course-python-cover.png" alt="" />
         </div>
         <div class="course-cover-inner">
           <p class="eyebrow">Python Self-Learning Platform</p>

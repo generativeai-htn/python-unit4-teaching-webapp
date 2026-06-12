@@ -14,9 +14,9 @@
       href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Sans+Thai:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=20260612-mobile-app2" />
   </head>
-  <body>
+  <body class="unit-page">
     <a class="skip-link" href="#main">ข้ามไปยังเนื้อหา</a>
 
     <header class="topbar" aria-label="แถบนำทางหลัก">
@@ -31,15 +31,19 @@
         <a href="index.html">หน้าแรก</a>
         <a href="unit4.html">หน่วยที่ 4</a>
         <a href="unit5.html">หน่วยที่ 5</a>
-        <a href="#profile">โปรไฟล์</a>
         <a href="#workshop">Workshop</a>
-        <a href="#slides">สไลด์</a>
-        <a href="#code-library">ตัวอย่าง</a>
         <a href="#python-lab">Python Lab</a>
-        <a href="#practice">ฝึกโจทย์</a>
         <a href="#assessment">วัดผล</a>
       </nav>
     </header>
+
+    <nav class="mobile-app-nav" aria-label="เมนูแอปบนมือถือ">
+      <a href="index.html"><i data-lucide="home"></i><span>หน้าแรก</span></a>
+      <a href="#profile"><i data-lucide="user"></i><span>ข้อมูล</span></a>
+      <a href="#workshop"><i data-lucide="route"></i><span>Workshop</span></a>
+      <a href="#python-lab"><i data-lucide="terminal-square"></i><span>Lab</span></a>
+      <a href="#assessment"><i data-lucide="star"></i><span>วัดผล</span></a>
+    </nav>
 
     <main id="main">
       <section class="hero" id="top">
@@ -196,6 +200,34 @@
           <p>สรุปแนวคิดหลักของบทเรียนเป็นหน่วยย่อย อ่านทบทวนก่อนทำโจทย์ได้</p>
         </div>
         <div class="module-grid" id="moduleGrid"></div>
+      </section>
+
+      <section class="guided-section" id="guided-practice" aria-labelledby="guided-title">
+        <div class="section-head">
+          <p class="eyebrow">Guided Practice</p>
+          <h2 id="guided-title">โมดูลนำทำก่อนลงมือเขียนโค้ด</h2>
+          <p>ฝึกอ่านนิพจน์ทีละชั้นก่อนรันโค้ดจริง เพื่อให้เข้าใจเหตุผลของผลลัพธ์ ไม่ใช่แค่จำคำตอบ</p>
+        </div>
+        <div class="guided-grid">
+          <article>
+            <span class="guided-step">01</span>
+            <h3>แยก operand/operator</h3>
+            <p>ดูนิพจน์ `x ** 2 + 2 * x + 1` แล้วชี้ว่าอะไรคือข้อมูล อะไรคือเครื่องหมาย และทั้งบรรทัดให้ค่าอะไร</p>
+            <a class="button secondary-light" href="#slides">ดูสไลด์กายวิภาคโค้ด</a>
+          </article>
+          <article>
+            <span class="guided-step">02</span>
+            <h3>ทดลอง operator 6 กลุ่ม</h3>
+            <p>เลือกรหัสตัวอย่าง arithmetic, comparison, logical, assignment และ membership แล้วส่งเข้า Lab เพื่อแก้ค่า</p>
+            <a class="button secondary-light" href="#code-library">เปิดคลังตัวอย่าง</a>
+          </article>
+          <article>
+            <span class="guided-step">03</span>
+            <h3>อ่าน precedence ให้เป็น</h3>
+            <p>เปรียบเทียบ `7 + 3 * 2` กับ `(7 + 3) * 2` เพื่อเห็นว่าลำดับความสำคัญเปลี่ยนผลลัพธ์อย่างไร</p>
+            <a class="button secondary-light" href="#worksheet">ลองภารกิจประยุกต์</a>
+          </article>
+        </div>
       </section>
 
       <section class="code-library" id="code-library" aria-labelledby="library-title">
